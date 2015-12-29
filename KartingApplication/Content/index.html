@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html ng-app="kartingApp">
+<head>
+    <title></title>
+
+</head>
+<body>
+    <div>
+        <div ng-controller="DriverController">
+            <div style="width: 500px; float:left;" ui-grid="driverGrid" ui-grid-selection class="myGrid"></div>
+        </div>
+
+        <div style="margin-left: 520px;">
+            <form ng-submit="submit()" ng-controller="EditDriverController">
+                <p>{{driver.FirstName}}</p>
+                <input type="text" ng-model="driver.FirstName" />
+                <!--<p><b>Driver Details</b></p>
+                <p>First Name: </p><p ng-show="!editMode">{{driver.FirstName}}</p>
+                <input type="text" ng-model="driver.FirstName" ng-show="editMode" />
+                <p>Last Name: {{driver.LastName}}</p>
+                <p>Birth Date: {{driver.BirthDate}}</p>
+                <button type="button" ng-click="editMode = true" value="Edit">Edit</button>
+                <button type="submit" value="Submit">Submit</button>-->
+            </form>
+        </div>
+
+    </div>
+
+    <link href="ui-grid-unstable.css" rel="stylesheet" />
+    <link href="KartingApp.css" rel="stylesheet" />
+    <script src="../Scripts/angular.js"></script>
+    <script src="../Scripts/Angular/driver.js"></script>
+    <script src="../Scripts/data/data.js"></script>
+    <script src="../Scripts/ui-grid-unstable.js"></script>
+</body>
+</html>
+

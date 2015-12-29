@@ -1,0 +1,11 @@
+﻿/* UI Grid */
+.myGrid {
+    width: 500px;
+    height: 400px;
+  }
+/* end UI Grid */
+
+html {
+    font-family: 'Arial', sans-serif; 
+    font-size: small;
+}
