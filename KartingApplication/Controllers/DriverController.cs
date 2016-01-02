@@ -82,8 +82,24 @@ namespace KartingApplication.Controllers
         }
 
         // DELETE api/driver/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
+            try
+            {
+                using (KartingEntities entities = new KartingEntities())
+                {
+                    Driver drv = entities.Driver.SingleOrDefault<Driver>(b => b.Id == id);
+                    // delete record
+                    entities.Driver.Remove(drv);
+                    // flush to disk
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }
