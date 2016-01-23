@@ -15,8 +15,20 @@
           <Property Name="BirthDate" Type="date" />
           <Property Name="Picture" Type="image" />
         </EntityType>
+        <EntityType Name="Race">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+        </EntityType>
         <EntityContainer Name="KartingModelStoreContainer">
           <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Race" EntityType="Self.Race" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -34,7 +46,19 @@
         </EntityType>
         <EntityContainer Name="KartingEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Driver" EntityType="Self.Driver" />
+          <EntitySet Name="Race" EntityType="KartingModel.Race" />
         </EntityContainer>
+        <EntityType Name="Race">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -49,6 +73,18 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Race">
+            <EntityTypeMapping TypeName="KartingModel.Race">
+              <MappingFragment StoreEntitySet="Race">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
