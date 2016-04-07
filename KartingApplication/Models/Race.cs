@@ -14,7 +14,7 @@ namespace KartingApplication.Models
     
     public partial class Race
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> Sequence { get; set; }
         public int Type { get; set; }

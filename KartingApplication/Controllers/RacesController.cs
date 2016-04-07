@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using KartingApplication.Models;
+using System.Text;
 
 namespace KartingApplication.Controllers
 {
@@ -47,7 +48,7 @@ namespace KartingApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != race.ID)
+            if (id != race.Id)
             {
                 return BadRequest();
             }
@@ -77,30 +78,55 @@ namespace KartingApplication.Controllers
         [ResponseType(typeof(Race))]
         public IHttpActionResult PostRace(Race race)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Race.Add(race);
-
             try
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (RaceExists(race.ID))
+                if (ModelState.IsValid)
                 {
-                    return Conflict();
+                    using (KartingEntities entities = new KartingEntities())
+                    {
+                        entities.Race.Add(race);
+                        entities.SaveChanges();
+
+                        var response = Request.CreateResponse(HttpStatusCode.OK);
+                        response.Content = new StringContent(race.Id.ToString(), Encoding.UTF8, "application/json");
+                        return CreatedAtRoute("DefaultApi", new { id = race.Id }, race);
+                        //return Request.CreateResponse(HttpStatusCode.OK);
+                    }
                 }
                 else
                 {
-                    throw;
+                    return BadRequest(ModelState);
+                    //return Request.CreateResponse(HttpStatusCode.InternalServerError, "invalid New Value");
                 }
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            return CreatedAtRoute("DefaultApi", new { id = race.ID }, race);
+            //db.Race.Add(race);
+
+            //try
+            //{
+            //    db.SaveChanges();
+            //}
+            //catch (DbUpdateException)
+            //{
+            //    if (RaceExists(race.ID))
+            //    {
+            //        return Conflict();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return CreatedAtRoute("DefaultApi", new { id = race.ID }, race);
         }
 
         // DELETE: api/Races/5
@@ -130,7 +156,7 @@ namespace KartingApplication.Controllers
 
         private bool RaceExists(int id)
         {
-            return db.Race.Count(e => e.ID == id) > 0;
+            return db.Race.Count(e => e.Id == id) > 0;
         }
     }
 }
