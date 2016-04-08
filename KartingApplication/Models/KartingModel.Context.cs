@@ -27,5 +27,6 @@ namespace KartingApplication.Models
     
         public virtual DbSet<Driver> Driver { get; set; }
         public virtual DbSet<Race> Race { get; set; }
+        public virtual DbSet<RaceResultSet> RaceResultSet { get; set; }
     }
 }

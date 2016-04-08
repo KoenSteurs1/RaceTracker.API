@@ -14,10 +14,19 @@ namespace KartingApplication.Models
     
     public partial class Driver
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Driver()
+        {
+            this.RaceResultSet = new HashSet<RaceResultSet>();
+        }
+    
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public byte[] Picture { get; set; }
         public int Id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RaceResultSet> RaceResultSet { get; set; }
     }
 }

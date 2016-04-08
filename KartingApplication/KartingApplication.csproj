@@ -217,6 +217,9 @@
     <Compile Include="Models\Race.cs">
       <DependentUpon>KartingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RaceResultSet.cs">
+      <DependentUpon>KartingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

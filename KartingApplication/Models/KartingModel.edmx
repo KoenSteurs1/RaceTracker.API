@@ -26,9 +26,51 @@
           <Property Name="Location" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="RaceResultSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Position" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DriverId" Type="int" Nullable="false" />
+          <Property Name="RaceId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DriverRaceResult">
+          <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+          <End Role="RaceResultSet" Type="Self.RaceResultSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RaceResultSet">
+              <PropertyRef Name="DriverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RaceRaceResult">
+          <End Role="Race" Type="Self.Race" Multiplicity="1" />
+          <End Role="RaceResultSet" Type="Self.RaceResultSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Race">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RaceResultSet">
+              <PropertyRef Name="RaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="KartingModelStoreContainer">
           <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Race" EntityType="Self.Race" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RaceResultSet" EntityType="Self.RaceResultSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DriverRaceResult" Association="Self.FK_DriverRaceResult">
+            <End Role="Driver" EntitySet="Driver" />
+            <End Role="RaceResultSet" EntitySet="RaceResultSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RaceRaceResult" Association="Self.FK_RaceRaceResult">
+            <End Role="Race" EntitySet="Race" />
+            <End Role="RaceResultSet" EntitySet="RaceResultSet" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -43,11 +85,21 @@
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="RaceResultSet" Relationship="KartingModel.FK_DriverRaceResult" FromRole="Driver" ToRole="RaceResultSet" />
         </EntityType>
         <EntityContainer Name="KartingEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Driver" EntityType="Self.Driver" />
           <EntitySet Name="Race" EntityType="KartingModel.Race" />
-        </EntityContainer>
+          <EntitySet Name="RaceResultSet" EntityType="KartingModel.RaceResultSet" />
+          <AssociationSet Name="FK_DriverRaceResult" Association="KartingModel.FK_DriverRaceResult">
+            <End Role="Driver" EntitySet="Driver" />
+            <End Role="RaceResultSet" EntitySet="RaceResultSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RaceRaceResult" Association="KartingModel.FK_RaceRaceResult">
+            <End Role="Race" EntitySet="Race" />
+            <End Role="RaceResultSet" EntitySet="RaceResultSet" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Race">
           <Key>
             <PropertyRef Name="Id" />
@@ -58,8 +110,44 @@
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RaceResultSet" Relationship="KartingModel.FK_RaceRaceResult" FromRole="Race" ToRole="RaceResultSet" />
         </EntityType>
-      </Schema>
+        <EntityType Name="RaceResultSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Position" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DriverId" Type="Int32" Nullable="false" />
+          <Property Name="RaceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Driver" Relationship="KartingModel.FK_DriverRaceResult" FromRole="RaceResultSet" ToRole="Driver" />
+          <NavigationProperty Name="Race" Relationship="KartingModel.FK_RaceRaceResult" FromRole="RaceResultSet" ToRole="Race" />
+        </EntityType>
+        <Association Name="FK_DriverRaceResult">
+          <End Type="KartingModel.Driver" Role="Driver" Multiplicity="1" />
+          <End Type="KartingModel.RaceResultSet" Role="RaceResultSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RaceResultSet">
+              <PropertyRef Name="DriverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RaceRaceResult">
+          <End Type="KartingModel.Race" Role="Race" Multiplicity="1" />
+          <End Type="KartingModel.RaceResultSet" Role="RaceResultSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Race">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RaceResultSet">
+              <PropertyRef Name="RaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -84,6 +172,16 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Sequence" ColumnName="Sequence" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RaceResultSet">
+            <EntityTypeMapping TypeName="KartingModel.RaceResultSet">
+              <MappingFragment StoreEntitySet="RaceResultSet">
+                <ScalarProperty Name="RaceId" ColumnName="RaceId" />
+                <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

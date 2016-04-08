@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using KartingApplication.Models;
 using System.Text;
+using System.Data.Entity.Validation;
 
 namespace KartingApplication.Controllers
 {
@@ -58,6 +59,16 @@ namespace KartingApplication.Controllers
             try
             {
                 db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        Console.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                    }
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -14,11 +14,20 @@ namespace KartingApplication.Models
     
     public partial class Race
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Race()
+        {
+            this.RaceResultSet = new HashSet<RaceResultSet>();
+        }
+    
         public int Id { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> Sequence { get; set; }
         public int Type { get; set; }
         public string Location { get; set; }
         public string Comment { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RaceResultSet> RaceResultSet { get; set; }
     }
 }

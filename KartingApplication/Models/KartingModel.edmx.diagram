@@ -7,7 +7,10 @@
       <Diagram DiagramId="c1a11b4e7ba44af18539a3fe5dc59351" Name="Diagram1">
         <EntityTypeShape EntityType="KartingModel.Driver" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KartingModel.Race" Width="1.5" PointX="3.375" PointY="0.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="KartingModel.RaceResultSet" Width="1.5" PointX="5.75" PointY="0.875" />
+        <AssociationConnector Association="KartingModel.FK_DriverRaceResult" />
+        <AssociationConnector Association="KartingModel.FK_RaceRaceResult" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
