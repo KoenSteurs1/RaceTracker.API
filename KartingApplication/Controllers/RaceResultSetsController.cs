@@ -19,7 +19,7 @@ namespace KartingApplication.Controllers
         // GET: api/RaceResultSets
         public IQueryable<RaceResultSet> GetRaceResultSet()
         {
-            return db.RaceResultSet;
+            return db.RaceResultSet.Include(b => b.Driver);
         }
 
         // GET: api/RaceResultSets/5
@@ -27,6 +27,8 @@ namespace KartingApplication.Controllers
         public IHttpActionResult GetRaceResultSet(int id)
         {
             RaceResultSet raceResultSet = db.RaceResultSet.Find(id);
+            //RaceResultSet raceResultSet = db.RaceResultSet.Include(b => b.Driver).SingleOrDefault(b => b.Id == id);
+            
             if (raceResultSet == null)
             {
                 return NotFound();

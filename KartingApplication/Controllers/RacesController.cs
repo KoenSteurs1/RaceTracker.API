@@ -23,7 +23,8 @@ namespace KartingApplication.Controllers
         {
             using (KartingEntities entities = new KartingEntities())
             {
-                return entities.Race.ToList<Race>();
+                return db.Race.Include(b => b.RaceResultSet.Select(r => r.Driver));
+                //return entities.Race.ToList<Race>();
             }
         }
 
@@ -31,7 +32,8 @@ namespace KartingApplication.Controllers
         [ResponseType(typeof(Race))]
         public IHttpActionResult GetRace(int id)
         {
-            Race race = db.Race.Find(id);
+            //Race race = db.Race.Find(id);
+            Race race = db.Race.Include(b => b.RaceResultSet.Select(r => r.Driver)).SingleOrDefault(b => b.Id == id);
             if (race == null)
             {
                 return NotFound();

@@ -15,7 +15,7 @@ namespace KartingApplication.Models
     public partial class RaceResultSet
     {
         public int Id { get; set; }
-        public string Position { get; set; }
+        public Nullable<int> Position { get; set; }
         public int DriverId { get; set; }
         public int RaceId { get; set; }
     

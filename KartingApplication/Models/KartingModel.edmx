@@ -31,7 +31,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Position" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Position" Type="int" />
           <Property Name="DriverId" Type="int" Nullable="false" />
           <Property Name="RaceId" Type="int" Nullable="false" />
         </EntityType>
@@ -117,7 +117,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Position" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="Int32" />
           <Property Name="DriverId" Type="Int32" Nullable="false" />
           <Property Name="RaceId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Driver" Relationship="KartingModel.FK_DriverRaceResult" FromRole="RaceResultSet" ToRole="Driver" />
